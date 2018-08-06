@@ -12,3 +12,10 @@ services:
     build: ./worker
     depends_on:
       - rmq
+
+  middleware-grpc:
+    build: ./middleware-grpc
+    depends_on:
+      - rmq
+    ports:
+      - 127.0.0.1:9111:9111
