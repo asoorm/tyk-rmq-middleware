@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	listenAddress = ":9111"
-	//ManifestAddress = ":8888"
+	listenAddress          = ":9111"
+	rabbitConnectionString = "amqp://guest:guest@rmq:5672/"
 )
 
 func main() {

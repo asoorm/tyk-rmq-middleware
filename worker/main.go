@@ -1,13 +1,26 @@
 package main
 
 import (
-	"github.com/streadway/amqp"
+	"encoding/json"
+	"fmt"
+
 	"github.com/Sirupsen/logrus"
+	"github.com/streadway/amqp"
 )
 
 const (
 	rabbitConnectionString = "amqp://guest:guest@rmq:5672/"
 )
+
+type requestMsg struct {
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
+	Age       int    `json:"age"`
+}
+
+type responseMsg struct {
+	Sentence string `json:"sentence"`
+}
 
 func main() {
 
@@ -50,6 +63,15 @@ func main() {
 
 			logrus.Infof("msg: %s", string(msgBody))
 
+			reqMsg := requestMsg{}
+			_ = json.Unmarshal([]byte(msgBody), &reqMsg)
+
+			resMsg := responseMsg{
+				Sentence: fmt.Sprintf("%s %s is %d year's old", reqMsg.FirstName, reqMsg.LastName, reqMsg.Age),
+			}
+
+			resMsgJson, _ := json.Marshal(resMsg)
+
 			err = channel.Publish(
 				"",
 				d.ReplyTo,
@@ -58,7 +80,7 @@ func main() {
 				amqp.Publishing{
 					ContentType:   "application/json",
 					CorrelationId: d.CorrelationId,
-					Body:          []byte(msgBody + " reply"),
+					Body:          resMsgJson,
 				},
 			)
 			fatalOnError(err, "failed to publish reply")

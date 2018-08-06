@@ -84,6 +84,12 @@
   version = "v2.1.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/streadway/amqp"
+  packages = ["."]
+  revision = "e5adc2ada8b8efff032bf61173a233d143e9318e"
+
+[[projects]]
   name = "github.com/x-cray/logrus-prefixed-formatter"
   packages = ["."]
   revision = "54b7cd10b359d569484cc6b6ffd21d4649dcd148"
@@ -202,6 +208,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "b13bdcd62f3598d6d18d3c9c7fdca6e9940853d48dd1df3de38829251a180409"
+  inputs-digest = "efd706c85ee77e33f3de546540fc8e487ee6b680f4dd62cd2ab9dd50cdd13525"
   solver-name = "gps-cdcl"
   solver-version = 1
